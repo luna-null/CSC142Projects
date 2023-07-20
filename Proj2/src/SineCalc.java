@@ -1,113 +1,50 @@
 public class SineCalc {
-
-    // makes a Riemann rectangle with the current x value being the left-most point on the rectangle
-    // @param  hStep   step size
-    // @param  x       the x-coords of where the rectangle starts
-    // @return rectCoords   A string of 4 points representing the points on a triangle:
-    //                      (x1,y1), (x1,y2), (x2,y1),(x2,y2)
-    public static String LeftRiemannRect( double x0, double hStep,int xOriginPixl,int yOriginPixl) {
-        lessThanEqualZeroCond(hStep);
-            double x1 = x0;
-            double x2 = x0 +‌ hStep;
-            double y1 = (yOriginPixl/2);     // y coords of points on rectangle
-            double y2 = (yOriginPixl/2)-(yOriginPixl*Math.E)*Math.sin(x0+hStep)/(2*Math.PI);
-            String rectCoords = String.format(
-                "%d %d, %d %d, %d %d, %d %d",
-                (int)(x1),(int)(y1),
-                (int)(x1),(int)(y2),
-                (int)(x2),(int)(y2),
-                (int)(x2),(int)(y1)
-                );
-
-        return rectCoords;
-    }
-    public static String MidRiemannRect(double x, double hStep‌,int xOriginPixl,int yOriginPixl) {
-        return LeftRiemannRect(x - hStep‌/2, hStep‌, xOriginPixl, yOriginPixl);
-    }
     
-    public static String RightRiemannRect(double x, double hStep, int xOriginPixl, int yOriginPixl) {
-        return LeftRiemannRect(x - hStep, hStep, xOriginPixl, yOriginPixl);
+    public static int sineXCoords(double x) {
+        int xCoord = (int) ((628/32)+(628-(628/16))*x/(2*Math.PI));     // (int) ((gWidth/32)+(gWidth-(gWidth/16))*theta/(2*Math.PI)),    
+        int point = xCoord;                                             // (int) ((gWidth/32)+(gWidth-(gWidth/16))*(theta+h)/(2*Math.PI)),
+        return point;
     }
-
-    /**
-     * Creates a string with the coordinates to Riemann rectangles created
-     * @param       bound1                      the lower bound
-     * @param       bound2                      the upper bound
-     * @param       hStep                       the step in between each rectangle
-     * @param       rectPlacement               1 for LeftRiemannRect placement
-     *                                          2 for MidRiemannRect placement
-     *                                          3 for RightRiemannRect placement
-     * @throws      IllegalArgumentException    if bound1, bound2 are less than zero or the same,
-     *                                          or if hStep is less than or equal to zero
-     * @return      rectCoords                  string representing the
-     *                                          coordinates to rectangles for every 4 numbers
-     * */
-    public static String RiemannSumRects(double bound1, double bound2, double hStep, int rectPlacement, int xOriginPixl, int yOriginPixl) {
-        equalToEachOther(bound1,bound2);
-        lessThanZeroCond(bound1);
-        lessThanZeroCond(bound2);
-        lessThanEqualZeroCond(hStep);
-        String rectCoords = "";      // conditionals
-
-        switch(rectPlacement){
-            case 1:
-                for (double x = bound1; x <= bound2; x += hStep) {
-                    rectCoords += LeftRiemannRect(x, hStep, xOriginPixl, yOriginPixl) + " ";
-                }
-                return rectCoords;
-            case 2:
-                for (double x=bound1;x<=bound2;x+=hStep) {
-                    rectCoords += MidRiemannRect(x, hStep, xOriginPixl, yOriginPixl) + " ";
-                }
-                return rectCoords;
-            case 3:
-            for (double x=bound1;x<=bound2;x+=hStep) {
-                rectCoords += RightRiemannRect(x, hStep, xOriginPixl, yOriginPixl) + " ";
+    public static int sineYCoords(double y) {                           // (int) ((gHeight/2)-(gHeight)*Math.sin(theta)/2-1),
+        int yCoord = (int) ((200/2)-(200)*Math.sin(y)/2);               // (int) ((gHeight/2)-(gHeight)*Math.sin(theta + h)/2)
+        int point = yCoord;
+        return point;
+    }
+    public static double calcArea(double width, double height) {
+        double area = width * height;
+        return area;
+    }
+    public static double riemannArea(
+                                            double bound1, double bound2,
+                                            int rectNum) {
+        if (rectNum > 0 && rectNum <= 500 && bound1 >= 0 && bound2 >= 0 && bound1 != bound2) {
+            double hStep = Math.PI/(rectNum);
+            double areaSum = 0;
+            for (int i=0;i<rectNum;i++) {
+                areaSum += calcArea(hStep, SineValue((hStep)*(1+2*i)/2));
             }
-            return rectCoords;
-            default:
-                throw new IllegalArgumentException("invalid rectPlacement: Must be 1 (Left), 2 (Mid), or 3 (Right)");
+            return areaSum;
         }
-            
+        else if (rectNum <= 0 || rectNum > 500) {
+            throw new IllegalArgumentException("There must be between 1 and 500 rectangeles!");
+        }
+        else if (bound1 < 0 || bound2 < 0 || bound1 >= bound2) {
+            throw new IllegalArgumentException("Bounds cannot be less than zero or equal to each other!");
+        }
+        else {
+            throw new IllegalArgumentException("Error:‌ Invalid arguments!");
+        }
+        }
+
+    public static double SineValue(double xIn) {
         
-    }
-
-    public static void equalToEachOther(double number1, double number2) {
-        if (number1 == number2) {
-            throw new IllegalArgumentException("Bounds cannot be the same!");
-        }
-    }
-
-    public static void lessThanZeroCond(double number) {
-        if (number < 0) {
-            throw new IllegalArgumentException("Bounds cannot be the same or less than zero!");
-        }
+        double sinValue = Math.sin(xIn);
+        int yInt = (int) sinValue;
+        double y4dec = sinValue*10000;
+        int y4decInt = (int)y4dec;
+        double yOut = ((double)(yInt) + (double)(y4decInt)/10000);
         
-    }
-    public static void lessThanEqualZeroCond(double number) {
-        if (number <= 0) {
-            throw new IllegalArgumentException("bounds cannot be the same or less than zero!");
-        }
-        
-    }
-    public static int[][]  convertStringToIntArray(String string) {
-        String[] pointStringArray = string.split(", ");
-        int[][] pointArray = new int[pointStringArray.length][2];
-
-        for (int i = 0; i < pointStringArray.length; i++) {
-            String point = pointStringArray[i];
-            String[] coordArray = point.split(" ");
-
-            String coordStrX = coordArray[0];
-            String coordStrY = coordArray[1];
-
-            int xCoord = Integer.parseInt(coordStrX);
-            int yCoord = Integer.parseInt(coordStrY);
-            
-            pointArray[i][0] = xCoord;
-            pointArray[i][1] = yCoord;
-        }
-        return pointArray;
+        return yOut;
     }
 }
 

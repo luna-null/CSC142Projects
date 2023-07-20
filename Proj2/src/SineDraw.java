@@ -3,19 +3,24 @@ import java.awt.Graphics;
 
 public class SineDraw {
 
-    public static void drawSineWave(Graphics graphic, int gWidth, int gHeight,Color defColor) {
+    public static void drawSineWave(Graphics graphic, int gWidth, int gHeight) {
         double h = Math.PI/65536;
-        for (double theta = 0; theta <= 2*Math.PI; theta += h) {
+        Color defColor = Color.RED;
+        graphic.setColor(defColor);
+        for (double theta = 0; theta < 2*Math.PI; theta += h) {
+            int point1X = SineCalc.sineXCoords(theta)-1; int point1Y = SineCalc.sineYCoords(theta)-1;
+            int point2X = SineCalc.sineXCoords(theta+h); int point2Y = SineCalc.sineYCoords(theta+h);
             graphic.drawLine(
-                (int) ((gWidth/32)+(gWidth-(gWidth/16))*theta/(2*Math.PI)-1),
-                (int) ((gHeight/2)-(gHeight*Math.E)*Math.sin(theta)/(2*Math.PI)-1),
-                (int) ((gWidth/32)+(gWidth-(gWidth/16))*(theta + h)/(2*Math.PI)),
-                (int) ((gHeight/2)-(gHeight*Math.E)*Math.sin(theta + h)/(2*Math.PI))
+            point1X,                                    // (int) ((gWidth/32)+(gWidth-(gWidth/16))*theta/(2*Math.PI)),    
+            point1Y,                                    // (int) ((gHeight/2)-(gHeight)*Math.sin(theta)/2-1),             
+            point2X,                                    // (int) ((gWidth/32)+(gWidth-(gWidth/16))*(theta+h)/(2*Math.PI)),
+            point2Y                                     // (int) ((gHeight/2)-(gHeight)*Math.sin(theta + h)/2)            
             );
         }
     }
     public static void drawGraph(Graphics graphic, int gWidth, int gHeight) {
-        graphic.drawLine(               // x-axis
+        graphic.setColor(Color.BLACK);      // paint it black
+        graphic.drawLine(                   // x-axis
             (int) (gWidth/32),
             (int) (gHeight/2),
             (int) (gWidth),
@@ -34,9 +39,7 @@ public class SineDraw {
             (int) (gWidth-gWidth/64),
             (int) ((gHeight/2)+(gHeight/64))
         );
-        for (int x=0; x<=4; x++) {      // X‌labels and lines
-            graphic.setColor(Color.BLACK);
-            
+        for (int x=0; x<=4; x++) {      // X‌ labels and lines
             graphic.setColor(Color.LIGHT_GRAY);     // gray-out extensions for lines
             graphic.drawLine(
                 (int) ((gWidth/32)+(gWidth-(gWidth/16))*x/4),
@@ -53,33 +56,6 @@ public class SineDraw {
             );
             graphic.setColor(Color.getColor("ffffff"));
 
-            switch(x) {
-                case 0:
-                    graphic.drawString(String.format("(0,0)",2*x),
-                    (int) ((gWidth/32)+(gWidth-(gWidth/16))*x/4 - (15*gWidth/512)),
-                    (int) ((gHeight/2)) //+(gHeight/32))
-                );break;
-                case 1:
-                    graphic.drawString(String.format("\u03C0/2"),
-                    (int) ((gWidth/32)+(gWidth-(gWidth/16))*x/4 - (15*gWidth/512)),
-                    (int) ((gHeight/2)+(gHeight/32))
-                );break;
-                case 2:
-                    graphic.drawString(String.format("\u03C0"),
-                    (int) ((gWidth/32)+(gWidth-(gWidth/16))*x/4 - (15*gWidth/512)),
-                    (int) ((gHeight/2)+(gHeight/32))
-                );break;
-                case 3:
-                    graphic.drawString(String.format("%x\u03C0/2",x),
-                    (int) ((gWidth/32)+(gWidth-(gWidth/16))*x/4 - (15*gWidth/512)),
-                    (int) ((gHeight/2)+(gHeight/32))
-                );break;
-                case 4:
-                    graphic.drawString(String.format("2\u03C0"),
-                    (int) ((gWidth/32)+(gWidth-(gWidth/16))*x/4 - (15*gWidth/512)),
-                    (int) ((gHeight/2)+(gHeight/32))
-                );break;
-            }
         }
         graphic.drawString("x", (gWidth-gWidth/8), gHeight/2-gHeight/64);
 
@@ -120,59 +96,17 @@ public class SineDraw {
                 graphic.setColor(Color.LIGHT_GRAY);     // gray-out extensions for lines
                 graphic.drawLine(
                     (int) ((gWidth/32)-(gWidth/64)),
-                    (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI)),
+                    (int) (200-200*y/8),
                     (int) (gWidth),
-                    (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI))
+                    (int) (200-200*y/8)
                 );
                 graphic.setColor(Color.BLACK);
                 graphic.drawLine(                       // coordinate lines
                         (int) ((gWidth/32)-(gWidth/64)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI)),
+                        (int) (200-200*y/8),
                         (int) ((gWidth/32)+(gWidth/64)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI))
+                        (int) ((200-200*y/8))
                     );
-            }
-            switch(y) {
-                    case 0:
-                        graphic.drawString(String.format("%.2f",((float)(y)/4-1)),
-                        (int) ((gWidth/32) - (15*gWidth/512)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(4*Math.PI))-(gWidth/256)
-                        );break;
-                    case 1:
-                        graphic.drawString(String.format("%.2f",((float)(y)/4-1)),
-                        (int) ((gWidth/32) - (15*gWidth/512)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI))-(gWidth/256)
-                        );break;
-                    case 2:
-                        graphic.drawString(String.format("%.2f",((float)(y)/4-1)),
-                        (int) ((gWidth/32) - (15*gWidth/512)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI))-(gWidth/256)
-                        );break;
-                    case 3:
-                        graphic.drawString(String.format("%.2f",((float)(y)/4-1)),
-                        (int) ((gWidth/32) - (15*gWidth/512)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI))-(gWidth/256)
-                        );break;
-                    case 5:
-                        graphic.drawString(String.format("%.2f",((float)(y)/4-1)),
-                        (int) ((gWidth/32) - (7*gWidth/256)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI))-(gWidth/256)
-                        );break;
-                    case 6:
-                        graphic.drawString(String.format("%.2f",((float)(y)/4-1)),
-                        (int) ((gWidth/32) - (7*gWidth/256)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI))-(gWidth/256)
-                        );break;
-                    case 7:
-                        graphic.drawString(String.format("%.2f",((float)(y)/4-1)),
-                        (int) ((gWidth/32) - (7*gWidth/256)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI))-(gWidth/256)
-                        );break;
-                    case 8:
-                        graphic.drawString(String.format("%.2f",((float)(y)/4-1)),
-                        (int) ((gWidth/32) - (7*gWidth/256)),
-                        (int) ((gHeight/2)*(1+((Math.E)/(Math.PI)))-(y*gHeight*Math.E)/(8*Math.PI))-(gWidth/256)
-                        );break;
             }
         }
         graphic.drawString("y", (5*gWidth/128), gHeight/8);
@@ -187,26 +121,58 @@ public class SineDraw {
      * @param       coord               One value for a coordinate.
      */
     
-    public static void DrawRiemannRects(Graphics graphic, int[][] pointArray) {
-        int x1 = -1;
-        int y1 = -1;
-        int x2 = -1;
-        int y2 = -1;
-        for (int i = 0; i < pointArray.length/2;i++) {
-            
-            
-            switch (i % 2) {
-                case 0:
-                    x1 = pointArray[i][0];
-                    y1 = pointArray[i][1];
-                    continue;
-                case 1:
-                    x2 = pointArray[i][0];
-                    y2 = pointArray[i][1];
-                    graphic.drawLine(x1,y1,x2,y2);
+    public static void DrawRiemannRects(Graphics graphic, 
+                                        double bound1, 
+                                        double bound2, 
+                                        double rectNum, 
+                                        int rectPlacement, 
+                                        int gWidth, int gHeight) {
+        double hStep = Math.PI/rectNum;
+        graphic.setColor(Color.BLACK);
+        if (rectPlacement == 1) {
+            for (double i = bound1-hStep; i <= bound2;i+=hStep) {
+                graphic.drawRect(
+                    SineCalc.sineXCoords(i-hStep),
+                    SineCalc.sineYCoords(i),
+                    -gWidth/32 + SineCalc.sineXCoords(hStep),
+                    gHeight/2 - SineCalc.sineYCoords(i)
+                );
             }
-
-
+        }
+        else if (rectPlacement == 2) {
+            for (double i = bound1-hStep/2; i <= bound2;i+=hStep) {
+                graphic.drawRect(
+                    SineCalc.sineXCoords(i-hStep/2),
+                    SineCalc.sineYCoords(i),
+                    -gWidth/32 + SineCalc.sineXCoords(hStep),
+                    gHeight/2 - SineCalc.sineYCoords(i)
+                );
+            }
+        }
+        else if (rectPlacement == 3) {
+            for (double i = bound1; i <= bound2;i+=hStep) {
+                graphic.drawRect(
+                    SineCalc.sineXCoords(i),
+                    SineCalc.sineYCoords(i),
+                    -gWidth/32 + SineCalc.sineXCoords(hStep),
+                    gHeight/2 - SineCalc.sineYCoords(i)
+                );
+            }
+        }
+        else{
+            throw new IllegalArgumentException(
+                "\n0 < rectPlacement < 3, rectPlacement ∈ Z\n"+
+                "i.e. rectPlacement must be between 1 and 3!"
+            );
         }
     }
+    
+    public static int XCoordTrans(int xCoord, int gWidth) {
+        int graphCoord = gWidth - xCoord;
+        return graphCoord;
+    } 
+    public static int YCoordTrans(int yCoord, int gHeight) {
+        int graphCoord = gHeight - yCoord;
+        return graphCoord;
+    } 
 }

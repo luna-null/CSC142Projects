@@ -33,5 +33,8 @@
     "**/.vscode",
     "**/.vscode/**"
   ],
-  "C_Cpp_Runner.useAddressSanitizer": false
+  "C_Cpp_Runner.useAddressSanitizer": false,
+  "indentRainbow.tabmixColor": "rgba(238,255,0,0.5)",
+  "indentRainbow.errorColor": "rgba(238,255,0,0.5)"
+  
 }
