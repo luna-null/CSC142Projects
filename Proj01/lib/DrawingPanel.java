@@ -29,12 +29,8 @@
  * See JavaDoc comments below for more information.
  */
 
-import java.awt.FontMetrics;
-import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
-import java.util.Collections;
+package Proj01.lib;
+
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -44,6 +40,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -51,7 +48,9 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -65,6 +64,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -72,26 +72,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.lang.Exception;
-import java.lang.Integer;
-import java.lang.InterruptedException;
-import java.lang.Math;
-import java.lang.Object;
-import java.lang.OutOfMemoryError;
-import java.lang.SecurityException;
-import java.lang.String;
-import java.lang.System;
-import java.lang.Thread;
-import java.net.URL;
 import java.net.NoRouteToHostException;
 import java.net.SocketException;
+import java.net.URL;
 import java.net.UnknownHostException;
+import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 import java.util.Vector;
+
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -2073,26 +2066,26 @@ public class DrawingPanel implements ImageObserver {
      */
     private void setupMenuBar() {
         // abort compare if we're running as an applet or in a secure environment
-        boolean secure = (System.getSecurityManager() != null);
+        // boolean secure = (System.getSecurityManager() != null);
         
         JMenuItem saveAs = new JMenuItem("Save As...", 'A');
         saveAs.addActionListener(actionListener);
         saveAs.setAccelerator(KeyStroke.getKeyStroke("ctrl S"));
-        saveAs.setEnabled(!secure);
+        // saveAs.setEnabled(!secure);
         
         JMenuItem saveAnimated = new JMenuItem("Save Animated GIF...", 'G');
         saveAnimated.addActionListener(actionListener);
         saveAnimated.setAccelerator(KeyStroke.getKeyStroke("ctrl A"));
-        saveAnimated.setEnabled(!secure);
+        // saveAnimated.setEnabled(!secure);
         
         JMenuItem compare = new JMenuItem("Compare to File...", 'C');
         compare.addActionListener(actionListener);
-        compare.setEnabled(!secure);
+        // compare.setEnabled(!secure);
         
         JMenuItem compareURL = new JMenuItem("Compare to Web File...", 'U');
         compareURL.addActionListener(actionListener);
         compareURL.setAccelerator(KeyStroke.getKeyStroke("ctrl U"));
-        compareURL.setEnabled(!secure);
+        // compareURL.setEnabled(!secure);
         
         JMenuItem zoomIn = new JMenuItem("Zoom In", 'I');
         zoomIn.addActionListener(actionListener);

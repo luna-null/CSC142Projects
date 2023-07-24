@@ -1,6 +1,10 @@
+package Proj02.src;
+
 import java.awt.Graphics;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import Proj02.lib.DrawingPanel;
 
 public class SineUI {
     private static final int GRAPH_WIDTH = 628;

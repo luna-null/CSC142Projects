@@ -1,3 +1,5 @@
+package Proj02.src;
+
 import java.awt.Color;
 import java.awt.Graphics;
 

@@ -1,3 +1,5 @@
+package Proj02.src;
+
 public class SineCalc {
     
     public static int sineXCoords(double x) {
@@ -15,25 +17,25 @@ public class SineCalc {
         return area;
     }
     public static double riemannArea(
-                                            double bound1, double bound2,
-                                            int rectNum) {
-        if (rectNum > 0 && rectNum <= 500 && bound1 >= 0 && bound2 >= 0 && bound1 != bound2) {
-            double hStep = Math.PI/(rectNum);
-            double areaSum = 0;
-            for (int i=0;i<rectNum;i++) {
-                areaSum += calcArea(hStep, SineValue((hStep)*(1+2*i)/2));
+        double bound1, double bound2,
+            int rectNum) {
+            if (rectNum > 0 && rectNum <= 500 && bound1 >= 0 && bound2 >= 0 && bound1 != bound2) {
+                double hStep = Math.PI/(rectNum);
+                double areaSum = 0;
+                for (int i=0;i<rectNum;i++) {
+                    areaSum += calcArea(hStep, SineValue((hStep)*(1+2*i)/2));
+                }
+                return areaSum;
             }
-            return areaSum;
-        }
-        else if (rectNum <= 0 || rectNum > 500) {
-            throw new IllegalArgumentException("There must be between 1 and 500 rectangeles!");
-        }
-        else if (bound1 < 0 || bound2 < 0 || bound1 >= bound2) {
-            throw new IllegalArgumentException("Bounds cannot be less than zero or equal to each other!");
-        }
-        else {
-            throw new IllegalArgumentException("Error:‌ Invalid arguments!");
-        }
+            else if (rectNum <= 0 || rectNum > 500) {
+                throw new IllegalArgumentException("There must be between 1 and 500 rectangeles!");
+            }
+            else if (bound1 < 0 || bound2 < 0 || bound1 >= bound2) {
+                throw new IllegalArgumentException("Bounds cannot be less than zero or equal to each other!");
+            }
+            else {
+                throw new IllegalArgumentException("Error:‌ Invalid arguments!");
+            }
         }
 
     public static double SineValue(double xIn) {

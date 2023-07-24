@@ -1,30 +1,18 @@
 {
   "version": "0.2.0",
   "configurations": [
-  {
-    "type": "java",
-    "name": "Launch Current File",
-    "request": "launch",
-    "mainClass": "${file}"
-  },
     {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
+      "type": "java",
+      "name": "Main",
       "request": "launch",
-      "args": [],
-      "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/le/code/github/repositories/java-projects",
-      "program": "/home/le/code/github/repositories/java-projects/build/Debug/outDebug",
-      "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
-      ]
+      "mainClass": "Main",
+      "projectName": "java-projects_d486037d"
+    },
+    {
+      "type": "java",
+      "name": "Launch Current File",
+      "request": "launch",
+      "mainClass": "${file}"
     }
   ]
 }

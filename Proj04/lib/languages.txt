@@ -1,0 +1,29 @@
+27
+Language,DataFile,TypicalType
+ALGOL,algol.txt,Compiled
+C,c.txt,Compiled
+C#,csharp.txt,Compiled
+C++,cplusplus.txt,Compiled
+Cobol,cobol.txt,Compiled
+Fortran,fortran.txt,Compiled
+Java,java.txt,Compiled
+Smalltalk,smalltalk.txt,Compiled
+Visual Basic,visualbasic.txt,Compiled
+APL,apl.txt,Interpreted
+BASIC,basic.txt,Interpreted
+Lisp,lisp.txt,Interpreted
+Pascal,pascal.txt,Interpreted
+Perl,perl.txt,Interpreted
+Python,python.txt,Interpreted
+Ruby,ruby.txt,Interpreted
+Mathematica,mathematica.txt,Numerical_Analysis
+MATLAB,matlab.txt,Numerical_Analysis
+PROSE,prose.txt,Numerical_Analysis
+R,r.txt,Numerical_Analysis
+AutoIt,autoit.txt,Scripting
+BeanShell,beanshell.txt,Scripting
+F-Script,fscript.txt,Scripting
+Game Maker Language,gamemakerlanguage.txt,Scripting
+PHP,php.txt,Scripting
+VBScript,vbscript.txt,Scripting
+Windows PowerShell,fpowershell.txt,Scripting
