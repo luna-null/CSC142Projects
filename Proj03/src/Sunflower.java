@@ -26,7 +26,7 @@ public class Sunflower {
         DrawingPanel picture = new DrawingPanel(drawingSize, drawingSize);
         Graphics graphic = picture.getGraphics();
 
-        Main.drawGradientBackground(
+        drawGradientBackground(
             graphic,
             Main.COLOR_BACKGROUND_TOP, Main.COLOR_BACKGROUND_BOTTOM,
             drawingSize
@@ -47,15 +47,45 @@ public class Sunflower {
                 (int)(petalCenterX), (int)(petalCenterY), (int)(centerRadius/2)
             );
             petal.draw(graphic, drawingSize);
+            sleepHalfSecond();
         }
-
-        //TODO - draw the sunflower!
 
     }
 
-    public void sleepHalfSecond() {
-        
-        //TODO - ask Barry how to make this
+    public static void sleepHalfSecond() {
+        try {
+        Thread.sleep(500);
+        } catch (InterruptedException e) {
+            // do nothing
+        }
+    }
+    public static void drawGradientBackground(
+        Graphics graphics, Color topColor, Color bottomColor, int drawingSize) {
 
+            int topRed = topColor.getRed();
+            int topGreen = topColor.getGreen();
+            int topBlue = topColor.getBlue();
+
+            int bottomRed = bottomColor.getRed();
+            int bottomGreen = bottomColor.getGreen();
+            int bottomBlue = bottomColor.getBlue();
+
+
+            for (int Yi = 0; Yi < drawingSize; Yi++) {
+                double p = (double) Yi / (double) drawingSize;
+                int YiRed = (int)Math.abs(
+                    (1-p) * topRed + p * bottomRed
+                );
+                int YiGreen = (int)Math.abs(
+                    (1-p) * topGreen + p * bottomGreen
+                );
+                int YiBlue = (int)Math.abs(
+                    (1-p) * topBlue + p * bottomBlue
+                );
+                Color YiColor = new Color(YiRed, YiGreen, YiBlue);
+
+                graphics.setColor(YiColor);
+                graphics.drawLine(0, Yi, drawingSize, Yi);
+            }
     }
 }

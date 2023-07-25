@@ -53,9 +53,11 @@ public class Circle {
     }
 
     public void draw(Graphics graphics, int drawSize) {
+
+        graphics.setColor(color);
+            
         double graphX = cartesianXToGraphicsX(drawSize, centerX);
         double graphY = cartesianYToGraphicsY(drawSize, centerY);
-        graphics.setColor(color);
         double topLeftBoundX = graphX - radius;
         double topLeftBoundY = graphY - radius;
 
