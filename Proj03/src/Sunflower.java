@@ -14,6 +14,13 @@ public class Sunflower {
     int centerRadius;
     int petalCount;
 
+    /**
+     * Constructor for Sunflower class.
+     *
+     * @param drawingSize size of the drawing panel
+     * @param centerRadius radius of the flower's center
+     * @param petalCount petal count
+     */
     public Sunflower(int drawingSize, int centerRadius, int petalCount) {
 
         this.drawingSize = drawingSize;
@@ -21,6 +28,9 @@ public class Sunflower {
         this.petalCount = petalCount;
     }
 
+    /**
+     * Draws sunflower.
+     */
     public void draw() {
 
         DrawingPanel picture = new DrawingPanel(drawingSize, drawingSize);
@@ -31,27 +41,30 @@ public class Sunflower {
             Main.COLOR_BACKGROUND_TOP, Main.COLOR_BACKGROUND_BOTTOM,
             drawingSize
         );
-
+        double radius = centerRadius*drawingSize/(2*petalCount*petalCount*Math.sqrt(petalCount));
         Circle flowerCenter = new Circle(
             COLOR_CENTER,
-            0, 0, centerRadius);
+            0, 0, radius);
 
         flowerCenter.draw(graphic, drawingSize);
 
         for (int iter = 0; iter <= petalCount; iter++) {
-            double petalCenterX = (3*centerRadius/2)*Math.sin(2*Math.PI*iter/petalCount);
-            double petalCenterY = (3*centerRadius/2)*Math.cos(2*Math.PI*iter/petalCount);
+            double petalCenterX = 1.5*radius*Math.sin(2.0*Math.PI*(double)iter/(double)petalCount)-1;
+            double petalCenterY = 1.5*radius*Math.cos(2.0*Math.PI*(double)iter/(double)petalCount)+1;
 
             Circle petal = new Circle(
                 COLOR_PETALS,
-                (int)(petalCenterX), (int)(petalCenterY), (int)(centerRadius/2)
-            );
+                (int)(petalCenterX), (int)(petalCenterY), (int)(radius/2)
+                );
             petal.draw(graphic, drawingSize);
             sleepHalfSecond();
         }
 
     }
 
+    /**
+     * Makes petals wait half a second to be drawn.
+     */
     public static void sleepHalfSecond() {
         try {
         Thread.sleep(500);
@@ -59,6 +72,15 @@ public class Sunflower {
             // do nothing
         }
     }
+
+    /**
+     * Draws gradient background.
+     *
+     * @param   graphics    graphics object to draw on
+     * @param   topColor    color at the top of the gradient
+     * @param   bottomColor color at the bottom of the gradient
+     * @param   drawingSize size of the drawing panel
+     */
     public static void drawGradientBackground(
         Graphics graphics, Color topColor, Color bottomColor, int drawingSize) {
 
